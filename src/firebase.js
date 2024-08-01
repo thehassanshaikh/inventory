@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, doc, setDoc, updateDoc, getDoc, getDocs, Timestamp } from 'firebase/firestore';
 
+// Your Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -16,4 +17,37 @@ const firebaseApp = initializeApp(firebaseConfig);
 // Initialize Firestore
 const db = getFirestore(firebaseApp);
 
-export { db };
+// Function to add hardware entry
+const addHardwareEntry = async (data) => {
+  await addDoc(collection(db, 'hardwareAssignments'), data);
+};
+
+// Function to update stock
+const updateStock = async (item, quantity) => {
+  const stockDocRef = doc(db, 'stockInventory', item);
+  const stockDoc = await getDoc(stockDocRef);
+  if (stockDoc.exists()) {
+    const currentStock = stockDoc.data().availableStock;
+    await updateDoc(stockDocRef, {
+      availableStock: currentStock + quantity
+    });
+  }
+};
+
+// Function to set initial stock
+const setStock = async (item, totalStock) => {
+  await setDoc(doc(db, 'stockInventory', item), {
+    totalStock: totalStock,
+    availableStock: totalStock
+  });
+};
+
+export {
+  db,
+  addHardwareEntry,
+  updateStock,
+  setStock,
+  doc,
+  getDoc,
+  Timestamp
+};
