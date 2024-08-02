@@ -1,15 +1,21 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import HardwareForm from './components/HardwareForm';
 import HardwareTable from './components/HardwareTable';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1>Hardware Management System</h1>
-      <HardwareForm />
-      <HardwareTable />
-    </div>
+    <Router>
+      <Navbar />
+      <div className="container mx-auto p-4">
+        <Routes>
+          <Route path="/" element={<HardwareForm />} />
+          <Route path="/table" element={<HardwareTable />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
