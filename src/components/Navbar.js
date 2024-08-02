@@ -9,18 +9,25 @@ const Navbar = () => {
         <div className="flex space-x-4">
           <NavLink
             to="/"
-            exact
-            className="text-gray-300 hover:text-white"
-            activeClassName="text-white"
+            end
+            className={({ isActive }) => 
+              isActive ? 'text-white' : 'text-gray-300 hover:text-white'}
           >
             Form
           </NavLink>
           <NavLink
             to="/table"
-            className="text-gray-300 hover:text-white"
-            activeClassName="text-white"
+            className={({ isActive }) => 
+              isActive ? 'text-white' : 'text-gray-300 hover:text-white'}
           >
             Table
+          </NavLink>
+          <NavLink
+            to="/stock-management"
+            className={({ isActive }) => 
+              isActive ? 'text-white' : 'text-gray-300 hover:text-white'}
+          >
+            Stock Management
           </NavLink>
         </div>
       </div>
