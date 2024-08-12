@@ -9,7 +9,7 @@ const App = () => {
   return (
     <Router>
       <Navbar />
-      <div className="container mx-auto p-4">
+      <div className="flex justify-center min-h-screen	bg-gray-200">
         <Routes>
           <Route path="/" element={<HardwareForm />} />
           <Route path="/table" element={<HardwareTable />} />
