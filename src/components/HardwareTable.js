@@ -47,7 +47,6 @@ const HardwareTable = () => {
   };
 
   return (
-    // <div className="md:p-2 lg-p-4">
     <div className="overflow-x-auto p-4">
       {editing && currentData ? (
         <EditForm
@@ -103,9 +102,6 @@ const HardwareTable = () => {
         </table>
       )}
     </div>
-    
-  // </div>
-
   
   );
 };

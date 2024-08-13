@@ -26,36 +26,55 @@ const StockManagement = () => {
     e.preventDefault();
 
     try {
-      await addDoc(collection(db, 'hardwareStock'), {
-        timestamp: Timestamp.now(),
-        product,
-        quantity: parseInt(quantity, 10),
-        brandName,
-        modelName,
-        location,
-        warrantyValid,
-        comment,
-        totalStock: parseInt(quantity, 10),
-        inUse: 0,
-        notWorking: 0,
-        available: parseInt(quantity, 10),
-      });
+        // Check if the product already exists in the database
+        const querySnapshot = await getDocs(collection(db, 'hardwareStock'));
+        const existingProduct = querySnapshot.docs.find(doc => {
+            const data = doc.data();
+            return (
+                data.product === product &&
+                data.brandName === brandName &&
+                data.location === location
+            );
+        });
 
-      setProduct('');
-      setQuantity('');
-      setBrandName('');
-      setModelName('');
-      setLocation('');
-      setWarrantyValid('');
-      setComment('');
+        if (existingProduct) {
+            alert('Product with the same Product, Brand Name, and Location already exists.');
+            return; // Stop the function if the product already exists
+        }
 
-      const querySnapshot = await getDocs(collection(db, 'hardwareStock'));
-      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setStockData(data);
+        // If the product doesn't exist, proceed to add it to the database
+        await addDoc(collection(db, 'hardwareStock'), {
+            timestamp: Timestamp.now(),
+            product,
+            quantity: parseInt(quantity, 10),
+            brandName,
+            modelName,
+            location,
+            warrantyValid,
+            comment,
+            totalStock: parseInt(quantity, 10),
+            inUse: 0,
+            notWorking: 0,
+            available: parseInt(quantity, 10),
+        });
+
+        // Clear form fields
+        setProduct('');
+        setQuantity('');
+        setBrandName('');
+        setModelName('');
+        setLocation('');
+        setWarrantyValid('');
+        setComment('');
+
+        // Fetch updated stock data and update state
+        const updatedSnapshot = await getDocs(collection(db, 'hardwareStock'));
+        const updatedData = updatedSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setStockData(updatedData);
     } catch (error) {
-      console.error('Error adding document: ', error);
+        console.error('Error adding document: ', error);
     }
-  };
+};
 
   return (
     <div className="max-w-full mx-auto bg-white p-8 rounded-lg shadow-md flex">
@@ -122,7 +141,7 @@ const StockManagement = () => {
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">Warranty Valid</label>
             <input
-              type="text"
+              type="date"
               value={warrantyValid}
               onChange={(e) => setWarrantyValid(e.target.value)}
               className="w-full px-3 py-2 border rounded-md"

@@ -10,6 +10,9 @@ const StockTable = ({ stockData }) => {
             <tr>
               <th className="py-2 px-4 border-b">Date</th>
               <th className="py-2 px-4 border-b">Product</th>
+              <th className="py-2 px-4 border-b">Brand Name</th>
+              <th className="py-2 px-4 border-b">Model Name</th>
+              <th className="py-2 px-4 border-b">Location</th>
               <th className="py-2 px-4 border-b">Total Stock</th>
               <th className="py-2 px-4 border-b">In Use</th>
               <th className="py-2 px-4 border-b">Not Working</th>
@@ -21,6 +24,9 @@ const StockTable = ({ stockData }) => {
               <tr key={item.id}>
                 <td className="py-2 px-4 border-b">{new Date(item.timestamp.toDate()).toLocaleString()}</td>
                 <td className="py-2 px-4 border-b">{item.product}</td>
+                <td className="py-2 px-4 border-b">{item.brandName}</td>
+                <td className="py-2 px-4 border-b">{item.modelName}</td>
+                <td className="py-2 px-4 border-b">{item.location}</td>
                 <td className="py-2 px-4 border-b">{item.totalStock}</td>
                 <td className="py-2 px-4 border-b">{item.inUse}</td>
                 <td className="py-2 px-4 border-b">{item.notWorking}</td>
