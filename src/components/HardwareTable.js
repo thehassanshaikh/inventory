@@ -47,63 +47,66 @@ const HardwareTable = () => {
   };
 
   return (
-    <div className='p-4'>
-      <div className="overflow-x-auto">
-        {editing && currentData ? (
-          <EditForm
-            currentData={currentData}
-            handleUpdate={handleUpdate}
-            setEditing={setEditing}
-          />
-        ) : (
-          <table className="min-w-full divide-y-2 divide-gray-200 bg-gray-50 text-sm p-2 rounded">
-            <thead className="ltr:text-left rtl:text-right">
-              <tr>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">TimeStamp</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">First Name</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Last Name</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Ticket Number</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Equipment</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Optional Equipment</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Serial Number</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Date of Assigning</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Assigned By</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Hardware Model</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Location</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Team</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Status Condition</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Status</th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Actions</th>
+    // <div className="md:p-2 lg-p-4">
+    <div className="overflow-x-auto p-4">
+      {editing && currentData ? (
+        <EditForm
+          currentData={currentData}
+          handleUpdate={handleUpdate}
+          setEditing={setEditing}
+        />
+      ) : (
+        <table className="min-w-full divide-y-2 divide-gray-200 bg-gray-50 text-sm p-2 rounded">
+          <thead className="text-left">
+            <tr>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">TimeStamp</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">First Name</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Last Name</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Ticket Number</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Equipment</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Optional Equipment</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Serial Number</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Date of Assigning</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Assigned By</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Hardware Model</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Location</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Team</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Status Condition</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Status</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {data.map(item => (
+              <tr key={item.id}>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.timestamp.toDate().toLocaleString()}</td>
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{item.firstName}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.lastName}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.ticketNumber}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.equipment}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.optionalEquipment}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.serialNumber}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.dateOfAssigning}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.assignedBy}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.hardwareModel}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.location}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.team}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.statusCondition}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.status}</td>
+                <td>
+                  <button className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 m-1" onClick={() => handleEdit(item)}>Edit</button>
+                  <button className="inline-block rounded bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700 m-1" onClick={() => handleDelete(item.id)}>Delete</button>
+                </td>
               </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {data.map(item => (
-                <tr key={item.id}>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700" >{item.timestamp.toDate().toLocaleString()}</td>
-                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{item.firstName}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.lastName}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.ticketNumber}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.equipment}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.optionalEquipment}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.serialNumber}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.dateOfAssigning}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.assignedBy}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.hardwareModel}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.location}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.team}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.statusCondition}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">{item.status}</td>
-                  <td>
-                    <button className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 m-1" onClick={() => handleEdit(item)}>Edit</button>
-                    <button className="inline-block rounded bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700  m-1" onClick={() => handleDelete(item.id)}>Delete</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
+    
+  // </div>
+
+  
   );
 };
 

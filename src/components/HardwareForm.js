@@ -87,6 +87,10 @@ const HardwareForm = () => {
             <input type="text" id="optionalEquipment" name="optionalEquipment" placeholder="Optional Equipment" value={formData.optionalEquipment} onChange={handleChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
           </div>
           <div>
+            <label for="serialNumber" className="block text-sm font-medium text-gray-700">Serial Number</label>
+            <input type="text" id="serialNumber" name="serialNumber" placeholder="Serial Number" value={formData.serialNumber} onChange={handleChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
+          </div>
+          <div>
             <label for="hardwareModel" className="block text-sm font-medium text-gray-700">Hardware Model</label>
             <input type="text" id="hardwareModel" name="hardwareModel" placeholder="Hardware Model" value={formData.hardwareModel} onChange={handleChange} required className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
           </div>
