@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, addDoc, Timestamp } from 'firebase/firestore';
 
 const HardwareForm = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +18,24 @@ const HardwareForm = () => {
     statusCondition: '',
     status: ''
   });
+
+  const [equipmentOptions, setEquipmentOptions] = useState([]);
+
+  useEffect(() => {
+    // Fetch equipment options from the stock inventory collection
+    const fetchEquipmentOptions = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'hardwareStock'));
+        const products = querySnapshot.docs.map(doc => doc.data().product);
+        const uniqueProducts = [...new Set(products)]; // Remove duplicates
+        setEquipmentOptions(uniqueProducts);
+      } catch (e) {
+        console.error("Error fetching equipment options: ", e);
+      }
+    };
+
+    fetchEquipmentOptions();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -79,8 +97,20 @@ const HardwareForm = () => {
             <input type="text" id="ticketNumber" name="ticketNumber" placeholder="Ticket Number" value={formData.ticketNumber} onChange={handleChange} required className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
           </div>
           <div>
-            <label for="equipment" className="block text-sm font-medium text-gray-700">Equipment</label>
-            <input type="text" id="equipment" name="equipment" placeholder="Equipment" value={formData.equipment} onChange={handleChange} required className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
+            <label htmlFor="equipment" className="block text-sm font-medium text-gray-700">Equipment</label>
+            <select
+              id="equipment"
+              name="equipment"
+              value={formData.equipment}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm"
+            >
+              <option value="">Select Equipment</option>
+              {equipmentOptions.map((option, index) => (
+                <option key={index} value={option}>{option}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label for="optionalEquipment" className="block text-sm font-medium text-gray-700">Optional Equipment</label>
