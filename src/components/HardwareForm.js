@@ -87,8 +87,21 @@ const HardwareForm = () => {
             <input type="text" id="team" name="team" placeholder="Team" value={formData.team} onChange={handleChange} required className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
           </div>
           <div>
-            <label for="location" className="block text-sm font-medium text-gray-700">Location</label>
-            <input type="text" id="location" name="location" placeholder="Location" value={formData.location} onChange={handleChange} required className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
+            <label htmlFor="location" className="block text-sm font-medium text-gray-700">
+              Location
+            </label>
+            <select
+              id="location"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm"
+            >
+              <option value="">Select Location</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Philippines">Philippines</option>
+            </select>
           </div>
 
           {/* <!-- Second Row --> */}
@@ -121,7 +134,7 @@ const HardwareForm = () => {
             <input type="text" id="serialNumber" name="serialNumber" placeholder="Serial Number" value={formData.serialNumber} onChange={handleChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
           </div>
           <div>
-            <label for="hardwareModel" className="block text-sm font-medium text-gray-700">Hardware Model</label>
+            <label for="hardwareModel" className="block text-sm font-medium text-gray-700">Model Name</label>
             <input type="text" id="hardwareModel" name="hardwareModel" placeholder="Hardware Model" value={formData.hardwareModel} onChange={handleChange} required className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
           </div>
 
@@ -135,9 +148,24 @@ const HardwareForm = () => {
             <input type="text" id="assignedBy" name="assignedBy" placeholder="Assigned By" value={formData.assignedBy} onChange={handleChange} required className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
           </div>
           <div>
-            <label for="statusCondition" className="block text-sm font-medium text-gray-700">Status Condition</label>
-            <input type="text" id="statusCondition" name="statusCondition" placeholder="Status Condition" value={formData.statusCondition} onChange={handleChange} required className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
+            <label htmlFor="statusCondition" className="block text-sm font-medium text-gray-700">
+              Status Condition
+            </label>
+            <select
+              id="statusCondition"
+              name="statusCondition"
+              value={formData.statusCondition}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm"
+            >
+              <option value="">Select Status Condition</option>
+              <option value="New">New</option>
+              <option value="Old">Old</option>
+              <option value="Borrowed">Borrowed</option>
+            </select>
           </div>
+
           <div>
             <label for="status" className="block text-sm font-medium text-gray-700">Status</label>
             <input type="text" id="status" name="status" placeholder="Status" value={formData.status} onChange={handleChange} required className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" />
