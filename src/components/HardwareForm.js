@@ -67,50 +67,52 @@ const HardwareForm = () => {
     const timestamp = Timestamp.fromDate(new Date());
 
     try {
-      // Add assignment to hardwareAssignments collection
-      await addDoc(collection(db, 'hardwareAssignments'), {
-        ...formData,
-        timestamp
-      });
-
-      // Fetch current stock data
-      const stockSnapshot = await getDocs(collection(db, 'hardwareStock'));
-      const stockDocs = stockSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      const itemToUpdate = stockDocs.find(doc => doc.product === formData.equipment && doc.modelName === formData.hardwareModel && doc.location === formData.location);
-
-      if (itemToUpdate) {
-        // Update stock counts based on status
-        const { id, totalStock, inUse, notWorking } = itemToUpdate;
-        const newInUse = formData.status === 'Working' ? inUse + 1 : inUse - 1;
-        const newNotWorking = formData.status === 'Not Working' ? notWorking + 1 : notWorking - 1;
-
-        await updateDoc(doc(db, 'hardwareStock', id), {
-          inUse: newInUse,
-          notWorking: newNotWorking,
+        // Add assignment to hardwareAssignments collection
+        await addDoc(collection(db, 'hardwareAssignments'), {
+            ...formData,
+            timestamp
         });
-      }
 
-      // Clear form fields
-      setFormData({
-        firstName: '',
-        lastName: '',
-        ticketNumber: '',
-        equipment: '',
-        optionalEquipment: '',
-        serialNumber: '',
-        dateOfAssigning: '',
-        assignedBy: '',
-        hardwareModel: '',
-        location: '',
-        team: '',
-        statusCondition: '',
-        status: 'Working'
-      });
-      setModelOptions([]);
+        // Fetch current stock data for the selected product and model
+        const stockSnapshot = await getDocs(collection(db, 'hardwareStock'));
+        const stockDocs = stockSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const itemToUpdate = stockDocs.find(doc => doc.product === formData.equipment && doc.modelName === formData.hardwareModel);
+
+        if (itemToUpdate) {
+            const { id, inUse, available } = itemToUpdate;
+
+            // Update stock counts
+            const newInUse = inUse + 1;
+            const newAvailableStock = available - 1;
+
+            // Update the stock document in Firestore
+            await updateDoc(doc(db, 'hardwareStock', id), {
+                inUse: newInUse,
+                available: newAvailableStock,
+            });
+        }
+
+        // Clear form fields after submission
+        setFormData({
+            firstName: '',
+            lastName: '',
+            ticketNumber: '',
+            equipment: '',
+            optionalEquipment: '',
+            serialNumber: '',
+            dateOfAssigning: '',
+            assignedBy: '',
+            hardwareModel: '',
+            location: '',
+            team: '',
+            statusCondition: '',
+            status: 'Working'
+        });
+        setModelOptions([]);
     } catch (e) {
-      console.error("Error adding document: ", e);
+        console.error("Error adding document: ", e);
     }
-  };
+};
 
   return (
     <div className='min-h-screen flex items-center'>
