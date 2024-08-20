@@ -5,7 +5,7 @@ const StockTable = ({ stockData }) => {
     <div className="w-full p-4">
       <h3 className="text-xl font-bold mb-4">Stock Information</h3>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white">
+        <table className="min-w-full bg-white rounded-xl">
           <thead>
             <tr>
               <th className="py-2 px-4 border-b">Date</th>

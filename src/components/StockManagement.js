@@ -77,17 +77,17 @@ const StockManagement = () => {
   };
 
   return (
-    <div className="max-w-full mx-auto bg-white p-8 rounded-lg shadow-md flex">
-      <div className="w-1/2 pr-4">
-        <h2 className="text-2xl font-bold mb-6">Manage Hardware Stock</h2>
-        <form onSubmit={handleSubmit}>
+    <div className="max-w-full mx-auto bg-gray-200 p-8 rounded-lg flex">
+      <div className="w-1/5">
+        <h2 className="text-xl font-bold mb-6">Add New Stock</h2>
+        <form className='p-4 bg-white rounded-xl' onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">Product</label>
             <input
               type="text"
               value={product}
               onChange={(e) => setProduct(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-1 border rounded-md"
               required
               placeholder="Enter Product Name"
             />
@@ -98,7 +98,7 @@ const StockManagement = () => {
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-1 border rounded-md"
               required
             />
           </div>
@@ -108,7 +108,7 @@ const StockManagement = () => {
               type="text"
               value={brandName}
               onChange={(e) => setBrandName(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-1 border rounded-md"
               required
             />
           </div>
@@ -118,7 +118,7 @@ const StockManagement = () => {
               type="text"
               value={modelName}
               onChange={(e) => setModelName(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-1 border rounded-md"
               required
             />
           </div>
@@ -127,7 +127,7 @@ const StockManagement = () => {
             <select
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-1 border rounded-md"
               required
             >
               <option value="">Select Location</option>
@@ -141,7 +141,7 @@ const StockManagement = () => {
               type="date"
               value={warrantyValid}
               onChange={(e) => setWarrantyValid(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-1 border rounded-md"
               required
             />
           </div>
@@ -150,7 +150,7 @@ const StockManagement = () => {
             <textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-1 border rounded-md"
               rows="3"
             ></textarea>
           </div>
@@ -162,7 +162,7 @@ const StockManagement = () => {
           </button>
         </form>
       </div>
-      <div className="w-1/2 pl-4">
+      <div className="w-4/5 pl-4">
         <StockTable stockData={stockData} />
       </div>
     </div>
