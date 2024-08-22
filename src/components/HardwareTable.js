@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
-import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, query,where,updateDoc, deleteDoc } from 'firebase/firestore';
 
 const HardwareTable = () => {
   const [data, setData] = useState([]);
@@ -31,6 +31,7 @@ const HardwareTable = () => {
   };
 
   const handleEdit = (item) => {
+    console.log(item);
     setEditing(true);
     setCurrentData(item);
   };
@@ -43,6 +44,40 @@ const HardwareTable = () => {
       setCurrentData(null);
     } catch (error) {
       console.error("Error updating document: ", error);
+    }
+  };
+
+  const handleStatusUpdate = async (product, modelName) => {
+    try {
+      // Query the hardwareStock collection to find the matching document
+      const q = query(
+        collection(db, 'hardwareStock'),
+        where('product', '==', product),
+        where('modelName', '==', modelName)
+      );
+      const querySnapshot = await getDocs(q);
+  
+      if (!querySnapshot.empty) {
+        const docSnapshot = querySnapshot.docs[0]; // Assuming there's only one matching document
+        const productData = docSnapshot.data();
+  
+        const newInUse = productData.inUse - 1;
+        const newNotWorking = productData.notWorking + 1;
+        const newAvailable = productData.available - newInUse - newNotWorking;
+  
+        // Update the matching document in hardwareStock collection
+        await updateDoc(doc(db, 'hardwareStock', docSnapshot.id), {
+          inUse: newInUse,
+          notWorking: newNotWorking,
+          available: newAvailable,
+        });
+  
+        console.log(`Updated product: ${product}, model: ${modelName}`);
+      } else {
+        console.error("No matching product found in hardwareStock collection.");
+      }
+    } catch (error) {
+      console.error("Error updating inventory:", error);
     }
   };
 
@@ -95,6 +130,8 @@ const HardwareTable = () => {
                 <td>
                   <button className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 m-1" onClick={() => handleEdit(item)}>Edit</button>
                   <button className="inline-block rounded bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700 m-1" onClick={() => handleDelete(item.id)}>Delete</button>
+                  <button className="inline-block rounded bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700 m-1" onClick={() => handleStatusUpdate(item.equipment, item.hardwareModel
+                  )}>Marked Not working</button>
                 </td>
               </tr>
             ))}
@@ -102,7 +139,7 @@ const HardwareTable = () => {
         </table>
       )}
     </div>
-  
+
   );
 };
 
