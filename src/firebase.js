@@ -3,11 +3,11 @@ import { getFirestore, collection, addDoc, getDocs, doc, setDoc, Timestamp } fro
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN_KEY,
+  projectId: "hardware-392e2",
+  storageBucket: "hardware-392e2.appspot.com",
+  messagingSenderId: "904722082654",
+  appId: "1:904722082654:web:6129fbc6040d0bd431fdcf"
 };
 
 // Initialize Firebase
